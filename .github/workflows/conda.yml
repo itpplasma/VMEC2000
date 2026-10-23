@@ -37,14 +37,16 @@ jobs:
 
       - name: Prepare
         run: |
-          conda activate base
-          conda install conda-build conda-verify
+          conda create --yes --name vmec-build-tools python=3.11 conda-build conda-verify
 
       - name: Build
-        run: conda build conda.recipe
+        run: >-
+          conda run --no-capture-output --name vmec-build-tools conda-build
+          --python "${{ matrix.python-version }}"
+          --output-folder "$RUNNER_TEMP/conda-bld" conda.recipe
 
       - name: Install
-        run: conda install -c ${CONDA_PREFIX}/conda-bld/ vmec
+        run: conda install --yes -c "$RUNNER_TEMP/conda-bld" vmec
 
       # - name: Test
       #  run: ./run_tests
