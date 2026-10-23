@@ -5,6 +5,10 @@ name: CI
 
 on: [push, pull_request]
 
+# f90wrap 0.3 needs NumPy 2 at build time, which has no Python 3.8 release.
+env:
+  PIP_CONSTRAINT: ${{ github.workspace }}/.github/constraints.txt
+
 jobs:
   CI:
     strategy:
