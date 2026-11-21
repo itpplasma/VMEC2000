@@ -47,6 +47,10 @@
              cosu1, sinv1, cosv1, imirr, xmpot, xnpot,&
              stat=istat1)
         IF (istat1 .ne. 0) PRINT *, "cleanup deallocate error #3"
+
+        ! precal allocates these again in the next run
+        IF (ALLOCATED(sinmni)) DEALLOCATE (sinmni, cosmni, stat=istat1)
+        IF (istat1 .ne. 0) PRINT *, "cleanup deallocate error #3b"
      
         CALL free_persistent_mem 
         CALL free_mem_funct3d
