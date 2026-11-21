@@ -325,6 +325,9 @@ C-----------------------------------------------
      &              cosu1, sinv1, cosv1, imirr, xmpot, xnpot,
      &              stat=istat1)
       IF (istat1 .ne. 0) PRINT *, Warning // "#3"
+!     precal allocates these again in the next run of the same process
+      IF (ALLOCATED(sinmni)) DEALLOCATE (sinmni, cosmni, stat=istat1)
+      IF (istat1 .ne. 0) PRINT *, Warning // "#3b"
 
       CALL free_mem_funct3d
       CALL free_mem_ns (lreset_xc)
